@@ -1,13 +1,3 @@
-# compact_results_file = "WRegularSeasonCompactResults.csv"
-# submission_file = "WSampleSubmissionStage1.csv"
-# 
-# 
-# 
-# weight_scores = 0.8
-# weight_outcomes = 0.2
-
-###
-
 cross_predictions <- 
   function(compact_results_file, 
            submission_file,

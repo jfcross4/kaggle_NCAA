@@ -91,6 +91,17 @@ Mgames <-
                     weight_scores = 0.8,
                     weight_outcomes = 0.2)
 
+# or for the women's tournament
+
+compact_results_file = "stage2data/WRegularSeasonCompactResults.csv"
+submission_file = "stage2data/WSampleSubmissionStage2.csv"
+
+Wgames <- 
+  cross_predictions(compact_results_file = compact_results_file,
+                    submission_file = submission_file,
+                    weight_scores = 0.8,
+                    weight_outcomes = 0.2)
+
 ### Example: you may not want to run these
 Mgames = add_win_it_all_guess(Mgames, "Gonzaga", "M")
 Mgames = add_teamA_beats_teamB_guess(Mgames, "Boise St", "Memphis", "M")
