@@ -16,3 +16,17 @@ write_submission_file = function(games, name){
               dplyr::select(ID, Pred), 
             file=paste0(name, ".csv"), row.names=FALSE)
 }
+
+dolphin_pred <- function(team1rating, team2rating){
+  z = team1rating - team2rating
+  pnorm(z)
+}
+
+pred538 <- function(r1, r2){
+  1/(1+ 10^((r2-r1)*30.464/400))
+}
+
+home_adj <- function(pred, home){
+  odds <- (pred/(1-pred))*1.656^home
+  return(odds/(odds+1))
+}

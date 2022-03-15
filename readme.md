@@ -17,7 +17,6 @@ source("add_win_it_all_guess.R")
 source("cross_ratings.R")
 source("scrape_dolphin.R")
 source("utils.R")
-source("scrape_dolphin_historic.R")
 source("match_dolphin_to_games.R")
 source("match_538_to_games.R")
 ```
@@ -151,3 +150,50 @@ I can also also write these to a .csv file the same way:
 write_submission_file(Mgames, "AwesomeCrossRatingsPreds") 
 
 ```
+
+# 4. Alernate Method (Men's Tournament): Scraping Dolphin Ratings
+
+Andy Dolphin's NCAA Men's Basketball ratings can be found [here](http://www.dolphinsim.com/ratings/ncaa_mbb/).  This website only has ratings for Men's teams and the method below can therefore only be used for the Men's tournament.
+
+We can scape them and match these ratings to the games we need to project using the following code:
+
+```r
+dolphin_ratings <- scrape_dolphin()
+```
+
+*dolphin* now contains Dolphin's team ratings matched up with TeamID's.
+
+We can match this with games using:
+
+```r
+submission_file = "stage2data/MSampleSubmissionStage2.csv"
+Mgames = match_dolphin_to_games(submission_file, dolphin_ratings)
+```
+
+You can use Dolphin's ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score.  Using that z-score and a standard normal table, you can produce a probabiity.  To do this in R, create the function *dolphin_pred*
+
+```r
+dolphin_pred <- function(team1rating, team2rating){
+  z = team1rating - team2rating
+  pnorm(z)
+}
+```
+
+You can use this function by doing:
+
+```r
+Mgames = Mgames %>% 
+  mutate(Pred = dolphin_pred(team1rating, team2rating))
+```
+
+You can add guesses to these predictions and create a .csv file to submit to Kaggle just as you did with the *Mgames* data frames created using other methods.
+
+# Final Notes
+
+Remember that you get to make **two** submissions for each tournament!  It would serve you well to make them different from each other.  If you add guesses, you may want to make the guesses in your two ballots mutually exclusive.
+
+**Final Submission Times (2022):**
+
+Men's Tournament - Thursday, March 17th, noon
+
+Women's - Friday, March 18th, 11 am

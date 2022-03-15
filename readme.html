@@ -383,7 +383,6 @@ source(&quot;add_win_it_all_guess.R&quot;)
 source(&quot;cross_ratings.R&quot;)
 source(&quot;scrape_dolphin.R&quot;)
 source(&quot;utils.R&quot;)
-source(&quot;scrape_dolphin_historic.R&quot;)
 source(&quot;match_dolphin_to_games.R&quot;)
 source(&quot;match_538_to_games.R&quot;)</code></pre>
 </div>
@@ -463,6 +462,32 @@ Mgames = add_teamA_beats_teamB_guess(Mgames, &quot;Boise St&quot;, &quot;Memphis
 <p>I can also also write these to a .csv file the same way:</p>
 <pre class="r"><code>write_submission_file(Mgames, &quot;AwesomeCrossRatingsPreds&quot;) 
 </code></pre>
+</div>
+<div id="alernate-method-mens-tournament-scraping-dolphin-ratings" class="section level1">
+<h1>4. Alernate Method (Men’s Tournament): Scraping Dolphin Ratings</h1>
+<p>Andy Dolphin’s NCAA Men’s Basketball ratings can be found <a href="http://www.dolphinsim.com/ratings/ncaa_mbb/">here</a>. This website only has ratings for Men’s teams and the method below can therefore only be used for the Men’s tournament.</p>
+<p>We can scape them and match these ratings to the games we need to project using the following code:</p>
+<pre class="r"><code>dolphin_ratings &lt;- scrape_dolphin()</code></pre>
+<p><em>dolphin</em> now contains Dolphin’s team ratings matched up with TeamID’s.</p>
+<p>We can match this with games using:</p>
+<pre class="r"><code>submission_file = &quot;stage2data/MSampleSubmissionStage2.csv&quot;
+Mgames = match_dolphin_to_games(submission_file, dolphin_ratings)</code></pre>
+<p>You can use Dolphin’s ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score. Using that z-score and a standard normal table, you can produce a probabiity. To do this in R, create the function <em>dolphin_pred</em></p>
+<pre class="r"><code>dolphin_pred &lt;- function(team1rating, team2rating){
+  z = team1rating - team2rating
+  pnorm(z)
+}</code></pre>
+<p>You can use this function by doing:</p>
+<pre class="r"><code>Mgames = Mgames %&gt;% 
+  mutate(Pred = dolphin_pred(team1rating, team2rating))</code></pre>
+<p>You can add guesses to these predictions and create a .csv file to submit to Kaggle just as you did with the <em>Mgames</em> data frames created using other methods.</p>
+</div>
+<div id="final-notes" class="section level1">
+<h1>Final Notes</h1>
+<p>Remember that you get to make <strong>two</strong> submissions for each tournament! It would serve you well to make them different from each other. If you add guesses, you may want to make the guesses in your two ballots mutually exclusive.</p>
+<p><strong>Final Submission Times (2022):</strong></p>
+<p>Men’s Tournament - Thursday, March 17th, noon</p>
+<p>Women’s - Friday, March 18th, 11 am</p>
 </div>
 
 

@@ -114,7 +114,8 @@ games.to.predict <- games.to.predict %>% mutate(
   home = ifelse(GameRound==2 & team2seed <= 4, -1, home)
 )
 
-games.to.predict <- games.to.predict %>% mutate(Pred = home_adj(Pred, home))
+games.to.predict <- games.to.predict %>% 
+  mutate(Pred = home_adj(Pred, home))
 
 womens_bracket_1 <- games.to.predict
 womens_bracket_2 <- games.to.predict
@@ -122,8 +123,9 @@ womens_bracket_2 <- games.to.predict
 
 ### Picking Baylor to win all of its games
 
-womens_bracket_1 <- womens_bracket_1 %>% mutate(pred_plus_pick = ifelse(team1name == "baylor", 1, Pred),
-                                                pred_plus_pick = ifelse(team2name == "baylor", 0, pred_plus_pick)
+womens_bracket_1 <- womens_bracket_1 %>% 
+  mutate(pred_plus_pick = ifelse(team1name == "baylor", 1, Pred),
+         pred_plus_pick = ifelse(team2name == "baylor", 0, pred_plus_pick)
 )
 
 womens_bracket_1  %>% ggplot(aes(Pred, pred_plus_pick))+geom_point()

@@ -4,14 +4,15 @@ match_dolphin_to_games = function(submission_file, dolphin_ratings){
   
   games = left_join(games,
             dolphin_ratings %>% 
-              dplyr::select(team_id, season, 
+              dplyr::select(TeamID,
                             team1rating = predictive.RATING),
-            by=c("team1"="team_id", "season"))
+            by=c("team1"="TeamID"))
   
   games = left_join(games,
                     dolphin_ratings %>% 
-                      dplyr::select(team_id, season, team2rating = predictive.RATING),
-                    by=c("team2"="team_id", "season"))
+                      dplyr::select(TeamID,
+                                    team2rating = predictive.RATING),
+                    by=c("team2"="TeamID"))
   
   return(games)
 }
