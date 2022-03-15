@@ -1,6 +1,8 @@
 # Kaggle March Madness Predictions
 
-The following code can be used to create projections for the Men's and Women's Kaggle March Madness Tournament.
+The following code can be used to create projections for the Men's and Women's Kaggle March Madness Tournament.  
+
+*[Note: This code, without explanations, can be found in 'making_stage2_predictions.R']*
 
 # 1. Loading the relevant packages and scripts
 
@@ -19,6 +21,7 @@ source("scrape_dolphin.R")
 source("utils.R")
 source("match_dolphin_to_games.R")
 source("match_538_to_games.R")
+source("modify_538_ratings.R")
 ```
 
 
@@ -42,7 +45,7 @@ W538 <- W538 %>% dplyr::select(team_name, team_rating)
 
 ## Modifying 538 Ratings
 
-Suppose that I think that the Men's Gonzaga team is underated and should have a rating of 100 instead of 96.47.  I can change their score to 100 using the *modify_538_ratings* function.
+Suppose that I think that the Men's Gonzaga team is underrated and should have a rating of 100 instead of 96.47.  I can change their score to 100 using the *modify_538_ratings* function.
 
 ```r
 M538 = modify_538_ratings(M538, "Gonzaga", 100)
@@ -54,7 +57,7 @@ Likewise, if I think that the women's Stanford team is over-rated by 538 and sho
 W538 = modify_538_ratings(W538, "Stanford", 95)
 ```
 
-Note, that I need to use 538's team name spellings when using this function so take a look at *M538* ann *W538* before using it.
+Note, that I need to use 538's team name spellings when using this function so take a look at *M538* and *W538* before using it.
 
 ## Matching up 538 ratings with games
 
@@ -119,7 +122,7 @@ Running all the code above produces two data frames **Wgames** and **Mgames**.  
 write_submission_file(Wgames, "MyAwesomePredictions") 
 ```
 
-# 3. Alernate Method: Creating Projections from Scratch
+# 3. Alternate Method: Creating Projections from Scratch
 
 The *cross_ratings* function uses the outcomes and scores of regular season games to predict the outcomes of tournament games. We have to point it to the regular season results and the sample submission file and can tell it how much weight to give to win/loss outcomes and how much weight to give to score differentials.  The following code would give 80% weight to score differential and 20% weight to win/loss outcomes:
 
@@ -151,11 +154,11 @@ write_submission_file(Mgames, "AwesomeCrossRatingsPreds")
 
 ```
 
-# 4. Alernate Method (Men's Tournament): Scraping Dolphin Ratings
+# 4. Alternate Method (Men's Tournament): Scraping Dolphin Ratings
 
 Andy Dolphin's NCAA Men's Basketball ratings can be found [here](http://www.dolphinsim.com/ratings/ncaa_mbb/).  This website only has ratings for Men's teams and the method below can therefore only be used for the Men's tournament.
 
-We can scape them and match these ratings to the games we need to project using the following code:
+We can scrape them and match these ratings to the games we need to project using the following code:
 
 ```r
 dolphin_ratings <- scrape_dolphin()
@@ -170,7 +173,7 @@ submission_file = "stage2data/MSampleSubmissionStage2.csv"
 Mgames = match_dolphin_to_games(submission_file, dolphin_ratings)
 ```
 
-You can use Dolphin's ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score.  Using that z-score and a standard normal table, you can produce a probabiity.  To do this in R, create the function *dolphin_pred*
+You can use Dolphin's ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score.  Using that z-score and a standard normal table, you can produce a probability.  To do this in R, create the function *dolphin_pred*
 
 ```r
 dolphin_pred <- function(team1rating, team2rating){
@@ -191,6 +194,8 @@ You can add guesses to these predictions and create a .csv file to submit to Kag
 # Final Notes
 
 Remember that you get to make **two** submissions for each tournament!  It would serve you well to make them different from each other.  If you add guesses, you may want to make the guesses in your two ballots mutually exclusive.
+
+Also, note if you make two submissions to Kaggle and later think better of them, you can make additional submission and then choose the ones that you will use in the competition.
 
 **Final Submission Times (2022):**
 

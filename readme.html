@@ -368,6 +368,7 @@ summary {
 <div id="kaggle-march-madness-predictions" class="section level1">
 <h1>Kaggle March Madness Predictions</h1>
 <p>The following code can be used to create projections for the Men’s and Women’s Kaggle March Madness Tournament.</p>
+<p><em>[Note: This code, without explanations, can be found in ‘making_stage2_predictions.R’]</em></p>
 </div>
 <div id="loading-the-relevant-packages-and-scripts" class="section level1">
 <h1>1. Loading the relevant packages and scripts</h1>
@@ -384,7 +385,8 @@ source(&quot;cross_ratings.R&quot;)
 source(&quot;scrape_dolphin.R&quot;)
 source(&quot;utils.R&quot;)
 source(&quot;match_dolphin_to_games.R&quot;)
-source(&quot;match_538_to_games.R&quot;)</code></pre>
+source(&quot;match_538_to_games.R&quot;)
+source(&quot;modify_538_ratings.R&quot;)</code></pre>
 </div>
 <div id="using-538-team-ratings-to-make-projections" class="section level1">
 <h1>2. Using 538 Team Ratings to Make Projections</h1>
@@ -402,11 +404,11 @@ W538 &lt;- W538 %&gt;% dplyr::select(team_name, team_rating)</code></pre>
 </div>
 <div id="modifying-538-ratings" class="section level2">
 <h2>Modifying 538 Ratings</h2>
-<p>Suppose that I think that the Men’s Gonzaga team is underated and should have a rating of 100 instead of 96.47. I can change their score to 100 using the <em>modify_538_ratings</em> function.</p>
+<p>Suppose that I think that the Men’s Gonzaga team is underrated and should have a rating of 100 instead of 96.47. I can change their score to 100 using the <em>modify_538_ratings</em> function.</p>
 <pre class="r"><code>M538 = modify_538_ratings(M538, &quot;Gonzaga&quot;, 100)</code></pre>
 <p>Likewise, if I think that the women’s Stanford team is over-rated by 538 and should really only have a rating of 95, I use the code:</p>
 <pre class="r"><code>W538 = modify_538_ratings(W538, &quot;Stanford&quot;, 95)</code></pre>
-<p>Note, that I need to use 538’s team name spellings when using this function so take a look at <em>M538</em> ann <em>W538</em> before using it.</p>
+<p>Note, that I need to use 538’s team name spellings when using this function so take a look at <em>M538</em> and <em>W538</em> before using it.</p>
 </div>
 <div id="matching-up-538-ratings-with-games" class="section level2">
 <h2>Matching up 538 ratings with games</h2>
@@ -442,8 +444,8 @@ Wgames = add_win_it_all_guess(Wgames, &quot;South Carolina&quot;, &quot;W&quot;)
 <pre class="r"><code>write_submission_file(Wgames, &quot;MyAwesomePredictions&quot;) </code></pre>
 </div>
 </div>
-<div id="alernate-method-creating-projections-from-scratch" class="section level1">
-<h1>3. Alernate Method: Creating Projections from Scratch</h1>
+<div id="alternate-method-creating-projections-from-scratch" class="section level1">
+<h1>3. Alternate Method: Creating Projections from Scratch</h1>
 <p>The <em>cross_ratings</em> function uses the outcomes and scores of regular season games to predict the outcomes of tournament games. We have to point it to the regular season results and the sample submission file and can tell it how much weight to give to win/loss outcomes and how much weight to give to score differentials. The following code would give 80% weight to score differential and 20% weight to win/loss outcomes:</p>
 <pre class="r"><code>compact_results_file = &quot;stage2data/MRegularSeasonCompactResults.csv&quot;
 submission_file = &quot;stage2data/MSampleSubmissionStage2.csv&quot;
@@ -463,16 +465,16 @@ Mgames = add_teamA_beats_teamB_guess(Mgames, &quot;Boise St&quot;, &quot;Memphis
 <pre class="r"><code>write_submission_file(Mgames, &quot;AwesomeCrossRatingsPreds&quot;) 
 </code></pre>
 </div>
-<div id="alernate-method-mens-tournament-scraping-dolphin-ratings" class="section level1">
-<h1>4. Alernate Method (Men’s Tournament): Scraping Dolphin Ratings</h1>
+<div id="alternate-method-mens-tournament-scraping-dolphin-ratings" class="section level1">
+<h1>4. Alternate Method (Men’s Tournament): Scraping Dolphin Ratings</h1>
 <p>Andy Dolphin’s NCAA Men’s Basketball ratings can be found <a href="http://www.dolphinsim.com/ratings/ncaa_mbb/">here</a>. This website only has ratings for Men’s teams and the method below can therefore only be used for the Men’s tournament.</p>
-<p>We can scape them and match these ratings to the games we need to project using the following code:</p>
+<p>We can scrape them and match these ratings to the games we need to project using the following code:</p>
 <pre class="r"><code>dolphin_ratings &lt;- scrape_dolphin()</code></pre>
 <p><em>dolphin</em> now contains Dolphin’s team ratings matched up with TeamID’s.</p>
 <p>We can match this with games using:</p>
 <pre class="r"><code>submission_file = &quot;stage2data/MSampleSubmissionStage2.csv&quot;
 Mgames = match_dolphin_to_games(submission_file, dolphin_ratings)</code></pre>
-<p>You can use Dolphin’s ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score. Using that z-score and a standard normal table, you can produce a probabiity. To do this in R, create the function <em>dolphin_pred</em></p>
+<p>You can use Dolphin’s ratings to making predictions by taking the difference in ratings between the two teams and treating that difference as a z-score. Using that z-score and a standard normal table, you can produce a probability. To do this in R, create the function <em>dolphin_pred</em></p>
 <pre class="r"><code>dolphin_pred &lt;- function(team1rating, team2rating){
   z = team1rating - team2rating
   pnorm(z)
@@ -485,6 +487,7 @@ Mgames = match_dolphin_to_games(submission_file, dolphin_ratings)</code></pre>
 <div id="final-notes" class="section level1">
 <h1>Final Notes</h1>
 <p>Remember that you get to make <strong>two</strong> submissions for each tournament! It would serve you well to make them different from each other. If you add guesses, you may want to make the guesses in your two ballots mutually exclusive.</p>
+<p>Also, note if you make two submissions to Kaggle and later think better of them, you can make additional submission and then choose the ones that you will use in the competition.</p>
 <p><strong>Final Submission Times (2022):</strong></p>
 <p>Men’s Tournament - Thursday, March 17th, noon</p>
 <p>Women’s - Friday, March 18th, 11 am</p>
