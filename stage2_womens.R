@@ -17,6 +17,7 @@ WTeamSpellings <- read.csv("/home/jcross/MarchMadness/data/WTeamSpellings.csv")
 
 five_w_id <- left_join(five %>% mutate(name = tolower(team_name)) %>% rename(team_id_538 = team_id), 
                        WTeamSpellings %>% rename(team_id = TeamID), by=c("name"="TeamNameSpelling"))
+
 write.csv(five_w_id, "/home/jcross/MarchMadness/data/stage2/fivethirtyeight_ncaa_forecasts_womens_ids.csv")
 
 ## Step 2: Determine the round in which every game would be played
@@ -28,7 +29,8 @@ SeedRoundSlots <- read.csv('/home/jcross/MarchMadness/data/stage2/NCAATourneySee
 SampleSubmission <- read.csv('/home/jcross/MarchMadness/data/stage2/WSampleSubmissionStage2.csv')
 
 
-games.to.predict <- cbind(SampleSubmission$ID, colsplit(SampleSubmission$ID, split = "_", names = c('season', 'team1', 'team2')))   
+games.to.predict <- cbind(SampleSubmission$ID, 
+          colsplit(SampleSubmission$ID, split = "_", names = c('season', 'team1', 'team2')))   
 colnames(games.to.predict)[1] <- "ID"
 
 
@@ -41,9 +43,11 @@ head(games.to.predict.Seeds)
 
 games.to.predict.SeedsRounds <- left_join(games.to.predict.Seeds, SRSjoin, by=c("Seed.x"="Seed.x", "Seed.y"="Seed.y"))
 
-games.to.predict.with.rounds <- games.to.predict.SeedsRounds %>% group_by(ID) %>% summarize(GameRound = min(GameRound)) %>% ungroup()
+games.to.predict.with.rounds <- games.to.predict.SeedsRounds %>% 
+  group_by(ID) %>% summarize(GameRound = min(GameRound)) %>% ungroup()
 
-games.to.predict.SeedsRounds %>% rename(seed1 = Seed.x, seed2 = Seed.y) %>% select(-EarlyDayNum, -LateDayNum )
+games.to.predict.SeedsRounds %>% rename(seed1 = Seed.x, seed2 = Seed.y) %>% 
+  select(-EarlyDayNum, -LateDayNum )
 
 write.csv(games.to.predict.with.rounds, 'Wgame_round.csv', row.names=FALSE)
 
@@ -93,7 +97,9 @@ games.to.predict <- left_join(games.to.predict, Seeds %>%
                                 dplyr::rename(team2seed = SeedNum) %>% select(TeamID, team2seed), by=c("team2"="TeamID"))
 
 
-games.to.predict <- games.to.predict %>% mutate(Pred = ifelse(GameRound==1&team1_rd0_win==1&team2_rd0_win==1,   team1_rd1_win, pred538_ratings))
+games.to.predict <- games.to.predict %>% 
+  mutate(Pred = ifelse(GameRound==1&team1_rd0_win==1&team2_rd0_win==1,
+                       team1_rd1_win, pred538_ratings))
 
 
 ### Adding HFA to second round games
@@ -123,7 +129,8 @@ womens_bracket_1 <- womens_bracket_1 %>% mutate(pred_plus_pick = ifelse(team1nam
 womens_bracket_1  %>% ggplot(aes(Pred, pred_plus_pick))+geom_point()
 
 
-womens_bracket_2 <- womens_bracket_2 %>% mutate(pred_plus_pick = ifelse(team1name == "baylor", 1, Pred),
+womens_bracket_2 <- 
+  womens_bracket_2 %>% mutate(pred_plus_pick = ifelse(team1name == "baylor", 1, Pred),
                                                 pred_plus_pick = ifelse(team2name == "baylor", 0, pred_plus_pick)
 )
 

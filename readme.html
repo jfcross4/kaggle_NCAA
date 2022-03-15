@@ -369,6 +369,101 @@ summary {
 <h1>Kaggle March Madness Predictions</h1>
 <p>The following code can be used to create projections for the Men’s and Women’s Kaggle March Madness Tournament.</p>
 </div>
+<div id="loading-the-relevant-packages-and-scripts" class="section level1">
+<h1>1. Loading the relevant packages and scripts</h1>
+<pre class="r"><code>library(rvest) 
+library(XML) 
+library(RCurl)
+library(dplyr)
+library(reshape2)
+library(lme4)
+library(tidyverse)
+
+source(&quot;add_win_it_all_guess.R&quot;)
+source(&quot;cross_ratings.R&quot;)
+source(&quot;scrape_dolphin.R&quot;)
+source(&quot;utils.R&quot;)
+source(&quot;scrape_dolphin_historic.R&quot;)
+source(&quot;match_dolphin_to_games.R&quot;)
+source(&quot;match_538_to_games.R&quot;)</code></pre>
+</div>
+<div id="using-538-team-ratings-to-make-projections" class="section level1">
+<h1>2. Using 538 Team Ratings to Make Projections</h1>
+<p>A full description of Nate Silver’s Methodology is described <a href="https://fivethirtyeight.com/features/how-our-march-madness-predictions-work-2/">here</a>.</p>
+<div id="reading-in-538-ratings-for-mens-and-womens-teams" class="section level2">
+<h2>Reading In 538 Ratings for Men’s and Womens Teams</h2>
+<p>The following code reads in the 538’s ratings and splits them into Men’s and Women’s ratings.</p>
+<pre class="r"><code>x538 &lt;- read.csv(&quot;stage2data/fivethirtyeight_ncaa_forecasts.csv&quot;)
+
+M538 = x538 %&gt;% filter(gender==&quot;mens&quot;)
+W538 = x538  %&gt;% filter(gender==&quot;womens&quot;)
+
+M538 &lt;- M538 %&gt;% dplyr::select(team_name, team_rating)
+W538 &lt;- W538 %&gt;% dplyr::select(team_name, team_rating)</code></pre>
+</div>
+<div id="modifying-538-ratings" class="section level2">
+<h2>Modifying 538 Ratings</h2>
+<p>Suppose that I think that the Men’s Gonzaga team is underated and should have a rating of 100 instead of 96.47. I can change their score to 100 using the <em>modify_538_ratings</em> function.</p>
+<pre class="r"><code>M538 = modify_538_ratings(M538, &quot;Gonzaga&quot;, 100)</code></pre>
+<p>Likewise, if I think that the women’s Stanford team is over-rated by 538 and should really only have a rating of 95, I use the code:</p>
+<pre class="r"><code>W538 = modify_538_ratings(W538, &quot;Stanford&quot;, 95)</code></pre>
+<p>Note, that I need to use 538’s team name spellings when using this function so take a look at <em>M538</em> ann <em>W538</em> before using it.</p>
+</div>
+<div id="matching-up-538-ratings-with-games" class="section level2">
+<h2>Matching up 538 ratings with games</h2>
+<p>Next, we read in the Sample Submission files (with the games we need to project) and match up each game with 538 ratings.</p>
+<pre class="r"><code>Wgames = match_538_to_games(&quot;stage2data/WSampleSubmissionStage2.csv&quot;, W538, &quot;W&quot;)
+Mgames = match_538_to_games(&quot;stage2data/MSampleSubmissionStage2.csv&quot;, M538, &quot;M&quot;)</code></pre>
+<p>The last step is to make predictions for each game. We can use the following formula for the change that team 1 (with a rating of r1) beats team 2 (with a rating of r2):</p>
+<p><span class="math display">\[prediction\ = \frac{1}{1 + 10^{(r_2 - r_1)\cdot\frac{30.464}{400}}}\]</span></p>
+<p>In R, we create the function…</p>
+<pre class="r"><code>pred538 &lt;- function(r1, r2){
+  1/(1+ 10^((r2-r1)*30.464/400))
+}</code></pre>
+<p>… and then apply this function to each game.</p>
+<pre class="r"><code>Wgames = Wgames %&gt;% mutate(Pred = pred538(team1rating, team2rating))
+Mgames = Mgames %&gt;% mutate(Pred = pred538(team1rating, team2rating))</code></pre>
+</div>
+<div id="adding-in-guesses" class="section level2">
+<h2>Adding in Guesses</h2>
+<p>While added pure guesses is likely to doom your submission to a terrible log loss score, it might also give a chance to win!</p>
+<p>I’ve written two functions to help add guesses.</p>
+<p><strong>add_win_it_all_guess</strong> gives one team a 100% chance to win all of its games. If this team doesn’t win the tournament, you’ll be out of luck. If I want to bank on Stanford winning all of it’s games in the women’s tournament, I would run the following (note the third parameter is “W”, this would be “M” if you are making predictions for the men’s tournament):</p>
+<pre class="r"><code>Wgames = add_win_it_all_guess(Wgames, &quot;Stanford&quot;, &quot;W&quot;)</code></pre>
+<p>This function can be used twice in succession, however. If I think that Stanford will win all of it’s games <em>except</em> its match-up against South Carolina and South Carolina will win it all, I would run this function twice, first with Stanford and then with South Carolina:</p>
+<pre class="r"><code>Wgames = add_win_it_all_guess(Wgames, &quot;Stanford&quot;, &quot;W&quot;)
+Wgames = add_win_it_all_guess(Wgames, &quot;South Carolina&quot;, &quot;W&quot;)</code></pre>
+<p>The other guessing function <em>add_teamA_beats_teamB_guess</em> simply predicts the outcome of one matchup. If, for instance, I want to predict that Miami beats South Florida in the first round of the women’s tournament, I can run the code:</p>
+<pre class="r"><code>Wgames = add_teamA_beats_teamB_guess(Wgames, &quot;Miami Fl&quot;, &quot;South Florida&quot;, &quot;W&quot;)</code></pre>
+<p><strong>Two warnings!</strong> First, I likely isn’t obvious that we need to use “Miami Fl” for Miami. Please check the <em>WTeamSpellings.csv</em> and <em>MTeamSpellings.csv</em> files within the stage2data folder to see the acceptable spellings of these team names. Second, if you’ve run <strong>all</strong> of the code above, you will have prediction that South Carolina wins it all, Stanford wins except when it faces South Carolina <strong>and</strong> that Miami beats South Florida in the first round. You can run the code above, to recreate <em>W538</em> and <em>M538</em> as well as <em>Wgames</em> and <em>Mgames</em> and start fresh, only making the adjustments you want.</p>
+</div>
+<div id="creating-a-.csv-file-to-submit-to-kaggle" class="section level2">
+<h2>Creating a .csv File to submit to Kaggle</h2>
+<p>Running all the code above produces two data frames <strong>Wgames</strong> and <strong>Mgames</strong>. We can turn these into .csv files that we can submit to Kaggle using the <strong>write_submission_file</strong> function. The code below takes the <em>Wgames</em> predictions and creates a file called “MyAwesomePredictions.csv” which could be submitted directly to Kaggle.</p>
+<pre class="r"><code>write_submission_file(Wgames, &quot;MyAwesomePredictions&quot;) </code></pre>
+</div>
+</div>
+<div id="alernate-method-creating-projections-from-scratch" class="section level1">
+<h1>3. Alernate Method: Creating Projections from Scratch</h1>
+<p>The <em>cross_ratings</em> function uses the outcomes and scores of regular season games to predict the outcomes of tournament games. We have to point it to the regular season results and the sample submission file and can tell it how much weight to give to win/loss outcomes and how much weight to give to score differentials. The following code would give 80% weight to score differential and 20% weight to win/loss outcomes:</p>
+<pre class="r"><code>compact_results_file = &quot;stage2data/MRegularSeasonCompactResults.csv&quot;
+submission_file = &quot;stage2data/MSampleSubmissionStage2.csv&quot;
+
+Mgames &lt;- 
+  cross_predictions(compact_results_file = compact_results_file,
+                    submission_file = submission_file,
+                    weight_scores = 0.8,
+                    weight_outcomes = 0.2)
+</code></pre>
+<p>I can modify these predictions in the same ways that I modified predictions based on 538 ratings. For example, I can make Gonzaga win it all:</p>
+<pre class="r"><code>Mgames = add_win_it_all_guess(Mgames, &quot;Gonzaga&quot;, &quot;M&quot;)
+
+Mgames = add_teamA_beats_teamB_guess(Mgames, &quot;Boise St&quot;, &quot;Memphis&quot;, &quot;M&quot;)
+</code></pre>
+<p>I can also also write these to a .csv file the same way:</p>
+<pre class="r"><code>write_submission_file(Mgames, &quot;AwesomeCrossRatingsPreds&quot;) 
+</code></pre>
+</div>
 
 
 
