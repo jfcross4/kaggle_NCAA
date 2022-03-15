@@ -46,6 +46,7 @@ arizona-st,3113
 arizona-state,3113
 ark little rock,3114
 ark pine bluff,3115
+ark-pine-bluff,3115
 ark.-pine bluff,3115
 arkansas,3116
 arkansas st,3117
@@ -57,7 +58,6 @@ arkansas-pine bluff,3115
 arkansas-pine-bluff,3115
 arkansas-st,3117
 arkansas-state,3117
-ark-pine-bluff,3115
 armstrong,3118
 armstrong st,3118
 army,3119
@@ -75,6 +75,7 @@ ball state,3123
 ball-st,3123
 ball-state,3123
 baylor,3124
+bellarmine,3468
 belmont,3125
 bethune-cookman,3126
 binghamton,3127
@@ -121,6 +122,11 @@ cal state bakersfield,3167
 cal state fullerton,3168
 cal state northridge,3169
 cal state-fullerton,3168
+cal-poly,3142
+cal-st-fullerton,3168
+cal-state-bakersfield,3167
+cal-state-fullerton,3168
+cal-state-northridge,3169
 cal. state - bakersfield,3167
 california,3143
 california baptist,3465
@@ -129,11 +135,6 @@ california-irvine,3414
 california-riverside,3415
 california-santa barbara,3364
 california-santa-barbara,3364
-cal-poly,3142
-cal-state-bakersfield,3167
-cal-state-fullerton,3168
-cal-state-northridge,3169
-cal-st-fullerton,3168
 campbell,3144
 canisius,3145
 cent arkansas,3146
@@ -152,8 +153,8 @@ central mich.,3141
 central michigan,3141
 central-ark,3146
 central-arkansas,3146
-central-connecticut-state,3148
 central-conn-st,3148
+central-connecticut-state,3148
 central-florida,3416
 central-mich,3141
 central-michigan,3141
@@ -171,7 +172,6 @@ chicago state,3152
 chicago-st,3152
 chicago-state,3152
 cincinnati,3153
-citadel,3154
 clemson,3155
 cleveland st,3156
 cleveland st.,3156
@@ -184,12 +184,12 @@ coastal carolina,3157
 coastal-caro,3157
 coastal-carolina,3157
 col charleston,3158
+col-of-charleston,3158
 col. of charleston,3158
 colgate,3159
 college of charlesto,3158
 college of charleston,3158
 college-of-charleston,3158
-col-of-charleston,3158
 colorado,3160
 colorado st,3161
 colorado st.,3161
@@ -227,6 +227,8 @@ depaul,3177
 detroit,3178
 detroit mercy,3178
 detroit-mercy,3178
+dixie st,3469
+Dixie State,3469
 drake,3179
 drexel,3180
 duke,3181
@@ -240,6 +242,7 @@ east tenn. st.,3190
 east tennessee st.,3190
 east tennessee state,3190
 east-carolina,3187
+east-tennessee-state,3190
 eastern ill.,3183
 eastern illinois,3183
 eastern kentucky,3184
@@ -256,7 +259,6 @@ eastern-mich,3185
 eastern-michigan,3185
 eastern-wash,3186
 eastern-washington,3186
-east-tennessee-state,3190
 edwardsville,3188
 elon,3189
 elon university,3189
@@ -271,8 +273,8 @@ fgcu,3195
 fiu,3198
 fl atlantic,3194
 fl gulf coast,3195
-fla. atlantic,3194
 fla-atlantic,3194
+fla. atlantic,3194
 florida,3196
 florida a&m,3197
 florida atlantic,3194
@@ -301,15 +303,15 @@ fresno-state,3201
 furman,3202
 g washington,3203
 ga southern,3204
+ga-southern,3204
 ga. southern,3204
 gardner webb,3205
 gardner-webb,3205
-ga-southern,3204
 george mason,3206
 george washington,3203
 george-mason,3206
-georgetown,3207
 george-washington,3203
+georgetown,3207
 georgia,3208
 georgia southern,3204
 georgia st,3209
@@ -333,8 +335,8 @@ hampton,3214
 hardin-simmons,3215
 hartford,3216
 harvard,3217
-hawaii,3218
 hawai'i,3218
+hawaii,3218
 high point,3219
 high-point,3219
 hofstra,3220
@@ -352,8 +354,8 @@ idaho state,3226
 idaho-st,3226
 idaho-state,3226
 il chicago,3227
-ill.-chicago,3227
 ill-chicago,3227
+ill.-chicago,3227
 illinois,3228
 illinois st,3229
 illinois st.,3229
@@ -413,14 +415,14 @@ kent-st,3245
 kent-state,3245
 kentucky,3246
 la salle,3247
+la-monroe,3419
+la-salle,3247
 la.-lafayette,3418
 la.-monroe,3419
 lafayette,3248
 lamar,3249
 lamar university,3249
 lamar-university,3249
-la-monroe,3419
-la-salle,3247
 lehigh,3250
 liberty,3251
 lipscomb,3252
@@ -433,11 +435,11 @@ long beach st.,3253
 long beach state,3253
 long island,3254
 long island university,3254
-longbeach state,3253
 long-beach-st,3253
 long-beach-state,3253
 long-island,3254
 long-island-university,3254
+longbeach state,3253
 longwood,3255
 louisiana,3418
 louisiana state,3261
@@ -487,11 +489,12 @@ md e shore,3271
 md. eastern shore,3271
 memphis,3272
 mercer,3273
-miami - florida,3274
+merrimack,3467
 miami (fl),3274
 miami (fla.),3274
 miami (oh),3275
 miami (ohio),3275
+miami - florida,3274
 miami fl,3274
 miami oh,3275
 miami-fl,3274
@@ -557,16 +560,17 @@ morgan-st,3288
 morgan-state,3288
 morris brown,3289
 morris-brown,3289
-mount st. marys,3291
+Mount Saint Mary`s,3291
 mount st. mary's,3291
+mount st. marys,3291
 mount-st-marys,3291
 ms valley st,3290
 ms valley state,3290
 mt st mary's,3291
 mt st. mary's,3291
-mt. st. mary`s,3291
-mt. st. mary's,3291
 mt-st-marys,3291
+mt. st. mary's,3291
+mt. st. mary`s,3291
 mtsu,3292
 murray st,3293
 murray st.,3293
@@ -617,8 +621,8 @@ new-jersey-tech,3312
 new-mexico,3307
 new-mexico-st,3308
 new-mexico-state,3308
-neworleans,3309
 new-orleans,3309
+neworleans,3309
 niagara,3310
 nicholls,3311
 nicholls st,3311
@@ -660,6 +664,8 @@ north-carolina-wilmington,3423
 north-dakota,3315
 north-dakota-st,3295
 north-dakota-state,3295
+north-florida,3316
+north-texas,3317
 northeastern,3318
 northeastern illinois,3302
 northern ariz.,3319
@@ -680,8 +686,6 @@ northern-illinois,3296
 northern-iowa,3320
 northern-kentucky,3297
 northern-ky,3297
-north-florida,3316
-north-texas,3317
 northwestern,3321
 northwestern la,3322
 northwestern st.,3322
@@ -765,29 +769,35 @@ sacramento-st,3170
 sacramento-state,3170
 sacred heart,3357
 sacred-heart,3357
+Saint Bonaventure,3382
+Saint Francis (NY),3383
 saint francis (pa),3384
-saint joseph`s,3386
-saint joseph?s,3386
+Saint John`s,3385
 saint joseph's,3386
+saint joseph`s,3386
+saint joseph’s,3386
 saint louis,3387
 saint mary's,3388
 saint mary's (ca),3388
-saint peter`s,3389
-saint peter?s,3389
+Saint Mary`s,3388
 saint peter's,3389
+saint peter`s,3389
+saint peter’s,3389
+Saint Thomas (Minn.),3472
 saint-francis-pa,3384
 saint-josephs,3386
-saintlouis,3387
 saint-louis,3387
 saint-marys,3388
 saint-marys-ca,3388
 saint-peters,3389
+saintlouis,3387
+Sam Houston,3358
 sam houston st,3358
 sam houston st.,3358
 sam houston state,3358
-samford,3359
 sam-houston-st,3358
 sam-houston-state,3358
+samford,3359
 san diego,3360
 san diego st,3361
 san diego st.,3361
@@ -828,8 +838,8 @@ sfa,3372
 siena,3373
 siu - edwardsville,3188
 siu edwardsville,3188
-siue,3188
 siu-edwardsville,3188
+siue,3188
 sju (pa),3386
 smu,3374
 south ala.,3375
@@ -853,14 +863,16 @@ south-carolina-upstate,3367
 south-dakota,3377
 south-dakota-st,3355
 south-dakota-state,3355
+south-fla,3378
+south-florida,3378
 southeast missouri state,3369
 southeast mo. st.,3369
+southeast-missouri-state,3369
+southeast-mo-st,3369
 southeastern la.,3368
 southeastern louisiana,3368
 southeastern-la,3368
 southeastern-louisiana,3368
-southeast-missouri-state,3369
-southeast-mo-st,3369
 southern,3380
 southern california,3425
 southern ill.,3356
@@ -885,8 +897,6 @@ southern-mississippi,3379
 southern-u,3380
 southern-university,3380
 southern-utah,3381
-south-fla,3378
-south-florida,3378
 southwest missouri state,3283
 st bonaventure,3382
 st francis (ny),3383
@@ -894,7 +904,6 @@ st francis (pa),3384
 st francis ny,3383
 st francis pa,3384
 st john's,3385
-st. johns,3385
 st john's (ny),3385
 st joseph's,3386
 st joseph's pa,3386
@@ -902,26 +911,8 @@ st louis,3387
 st mary's (ca),3388
 st mary's ca,3388
 st peter's,3389
-st. bonaventure,3382
-st. francis (bkn),3383
-st. francis (ny),3383
-st. francis (pa),3384
-st. francis brooklyn,3383
-st. francis-ny,3383
-st. john`s (ny),3385
-st. john?s,3385
-st. john's,3385
-st. john's (ny),3385
-st. joseph's,3386
-st. joseph's pa,3386
-st. mary`s (ca),3388
-st. mary's,3388
-st. peter's,3389
-stanford,3390
+St Thomas MN,3472
 st-bonaventure,3382
-stephen f. austin,3372
-stephen-f-austin,3372
-stetson,3391
 st-francis-brooklyn,3383
 st-francis-ny,3383
 st-francis-pa,3384
@@ -929,15 +920,38 @@ st-johns,3385
 st-johns-ny,3385
 st-josephs-pa,3386
 st-marys-ca,3388
+st-peters,3389
+st. bonaventure,3382
+st. francis (bkn),3383
+st. francis (ny),3383
+st. francis (pa),3384
+st. francis brooklyn,3383
+st. francis-ny,3383
+st. john's,3385
+st. john's (ny),3385
+st. john`s (ny),3385
+st. john’s,3385
+st. joseph's,3386
+st. joseph's pa,3386
+st. mary's,3388
+st. mary`s (ca),3388
+st. peter's,3389
+stanford,3390
+stephen f. austin,3372
+stephen-f-austin,3372
+stetson,3391
 stony brook,3392
 stony-brook,3392
-st-peters,3389
+suny albany,3107
 sw missouri st.,3283
 syracuse,3393
 tam c,3394
 tam c. christi,3394
+tarleton st,3470
+Tarleton State,3470
 tcu,3395
 temple,3396
+tenn-martin,3404
 tennessee,3397
 tennessee st,3398
 tennessee st.,3398
@@ -948,7 +962,6 @@ tennessee-martin,3404
 tennessee-st,3398
 tennessee-state,3398
 tennessee-tech,3399
-tenn-martin,3404
 tex.-pan american,3410
 texas,3400
 texas a&m,3401
@@ -965,7 +978,6 @@ texas st,3402
 texas st.,3402
 texas state,3402
 texas tech,3403
-texasa&m,3401
 texas-am,3401
 texas-am-corpus-christi,3394
 texas-arlington,3426
@@ -982,8 +994,7 @@ texas-southern,3411
 texas-st,3402
 texas-state,3402
 texas-tech,3403
-the citadel,3154
-the-citadel,3154
+texasa&m,3401
 tn martin,3404
 toledo,3405
 towson,3406
@@ -998,16 +1009,17 @@ ualr,3114
 uc davis,3413
 uc irvine,3414
 uc riverside,3415
+uc san diego,3471
 uc santa barb.,3364
 uc santa barbara,3364
 uc-davis,3413
-ucf,3416
 uc-irvine,3414
-ucla,3417
-uconn,3163
 uc-riverside,3415
 uc-santa barbara,3364
 uc-santa-barbara,3364
+ucf,3416
+ucla,3417
+uconn,3163
 ucsb,3364
 uic,3227
 ull,3418
@@ -1034,6 +1046,8 @@ usc-upstate,3367
 ut arlington,3426
 ut martin,3404
 ut san antonio,3427
+ut-arlington,3426
+ut-martin,3404
 utah,3428
 utah st,3429
 utah st.,3429
@@ -1044,10 +1058,8 @@ utah-st,3429
 utah-state,3429
 utah-valley,3430
 utah-valley-state,3430
-ut-arlington,3426
 utep,3431
 utica,3432
-ut-martin,3404
 utrgv,3410
 utsa,3427
 va commonwealth,3433
@@ -1059,13 +1071,9 @@ vermont,3436
 villanova,3437
 virginia,3438
 virginia commonwealth,3433
-virginia military,3440
-virginia military institute,3440
 virginia tech,3439
 virginia-commonwealth,3433
-virginia-military-institute,3440
 virginia-tech,3439
-vmi,3440
 w carolina,3441
 w illinois,3442
 w kentucky,3443
@@ -1088,6 +1096,7 @@ weber-st,3451
 weber-state,3451
 west texas a&m,3446
 west virginia,3452
+west-virginia,3452
 western caro.,3441
 western carolina,3441
 western ill.,3442
@@ -1104,18 +1113,17 @@ western-kentucky,3443
 western-ky,3443
 western-mich,3444
 western-michigan,3444
-west-virginia,3452
 wi green bay,3453
 wi milwaukee,3454
 wichita st,3455
 wichita st.,3455
 wichita state,3455
 wichita-st,3455
-wichitastate,3455
 wichita-state,3455
+wichitastate,3455
 william & mary,3456
-william-mary,3456
 william--mary,3456
+william-mary,3456
 winston salem,3445
 winston-salem,3445
 winston-salem-state,3445

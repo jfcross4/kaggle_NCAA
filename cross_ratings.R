@@ -17,6 +17,8 @@ cross_predictions <-
 source("utils.R")
 results = read.csv(compact_results_file)
 
+results = results %>% filter(Season==2022)
+
 sub1 <- results %>% 
   mutate(team1=as.factor(WTeamID), team2=as.factor(LTeamID), outcome=1,
          home = case_when(
