@@ -51,7 +51,7 @@ add_teamA_beats_teamB_guess = function(preds, team_nameA, team_nameB, tournament
   if(AteamID < BteamID){
     preds[preds$team1==AteamID & preds$team2==BteamID,]$Pred = 1
   } else{
-    preds[preds$team2==AteamID & preds$team1==AteamID,]$Pred = 0
+    preds[preds$team2==AteamID & preds$team1==BteamID,]$Pred = 0
   }
   return(preds)
 }
